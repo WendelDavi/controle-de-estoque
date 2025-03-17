@@ -4,12 +4,8 @@ public class ControleEstoque {
 
     private ArrayList<Produto> produtos = new ArrayList<>();
 
-    public void adicionarProdutoPerecivel(String nome, int codigo, int quantidade, double preco, Departamento departamento, String dataValidade) {
-        produtos.add(new ProdutoPerecivel(nome, codigo, quantidade, preco, departamento, dataValidade));
-    }
-
-    public void adicionarProdutoEletronico(String nome, int codigo, int quantidade, double preco, String marca, int garantia) {
-        produtos.add(new ProdutoEletronico(nome, codigo, quantidade, preco, marca, garantia));
+    public void adicionarProduto(Produto produto) {
+        produtos.add(produto);
     }
 
     public void atualizarEstoque(int codigo, Produto novoProduto) {
@@ -21,12 +17,12 @@ public class ControleEstoque {
     }
 
     public void listarProdutos() {
-        for (Produto p : produtos) {
-            System.out.println("Nome: " + p.getNome());
-            System.out.println("Código: " + p.getCodigo());
-            System.out.println("Quantidade: " + p.getQuantidade());
-            System.out.println("Preço: " + p.getPreco());
-            System.out.println("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
+        if (produtos.isEmpty()) {
+            System.out.println("Não há produtos no estoque.");
+        } else {
+            for (Produto p : produtos) {
+                p.exibirInformacoes();
+            }
         }
     }
 

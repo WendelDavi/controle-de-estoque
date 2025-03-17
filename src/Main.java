@@ -41,10 +41,10 @@ public class Main {
                                 int escolha = scanner.nextInt();
                                 Departamento departamento = Departamento.values()[escolha];
                                 scanner.nextLine();
-                                System.out.println("Digite a data de validade:");
+                                System.out.println("Digite a data de validade (dd/MM/yyyy):");
                                 String dataValidade = scanner.nextLine();
-                                controle.adicionarProdutoPerecivel(nome, codigo, quantidade, preco, departamento,
-                                        dataValidade);
+                                Produto produto = new ProdutoPerecivel(nome, codigo, quantidade, preco, departamento, dataValidade);
+                                controle.adicionarProduto(produto);
                             }
                             case 2 -> {
                                 System.out.println("Digite a marca");
@@ -52,7 +52,8 @@ public class Main {
                                 scanner.nextLine();
                                 System.out.println("Digite a garantia em meses:");
                                 int garantia = scanner.nextInt();
-                                controle.adicionarProdutoEletronico(nome, codigo, quantidade, preco, marca, garantia);
+                                Produto produto = new ProdutoEletronico(nome, codigo, quantidade, preco, marca, garantia);
+                                controle.adicionarProduto(produto);
                             }
                             case 3 -> {
                                 break OUTER;
