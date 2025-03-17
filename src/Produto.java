@@ -1,23 +1,23 @@
-public class Produto {
+public abstract class Produto {
     
-    private String name;
+    private String nome;
     private int codigo;
     private int quantidade;
     private double preco;
 
-    public Produto(String name, int codigo, int quantidade, double preco) {
-        this.name = name;
+    public Produto(String nome, int codigo, int quantidade, double preco) {
+        this.nome = nome;
         this.codigo = codigo;
         this.quantidade = quantidade;
         this.preco = preco;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String name) {
+        this.nome = name;
     }
 
     public int getCodigo() {
@@ -43,4 +43,6 @@ public class Produto {
     public void setPreco(double preco) {
         this.preco = preco;
     }
+
+    public abstract void exibirInformacoes();
 }    

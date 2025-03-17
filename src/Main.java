@@ -5,8 +5,7 @@ public class Main {
     public static void main(String[] args) {
         ControleEstoque controle = new ControleEstoque();
         try (Scanner scanner = new Scanner(System.in, "UTF-8")) {
-            OUTER:
-            while (true) {
+            OUTER: while (true) {
                 System.out.println("1. Cadastrar produto");
                 System.out.println("2. Atualizar produto");
                 System.out.println("3. Listar produtos");
@@ -27,7 +26,40 @@ public class Main {
                         scanner.nextLine();
                         System.out.println("Digite o preço:");
                         double preco = scanner.nextDouble();
-                        controle.adicionarProduto(nome, codigo, quantidade, preco);
+                        scanner.nextLine();
+                        System.out.println("Tipo de Produto:");
+                        System.out.println("1. Produto Perecível");
+                        System.out.println("2. Produto Eletronico");
+                        System.out.println("3. Sair");
+                        int tipoProduto = scanner.nextInt();
+                        switch (tipoProduto) {
+                            case 1 -> {
+                                System.out.println("Digite o departamento: ");
+                                for (Departamento d : Departamento.values()) {
+                                    System.out.println(d.ordinal() + " - " + d);
+                                }
+                                int escolha = scanner.nextInt();
+                                Departamento departamento = Departamento.values()[escolha];
+                                scanner.nextLine();
+                                System.out.println("Digite a data de validade:");
+                                String dataValidade = scanner.nextLine();
+                                controle.adicionarProdutoPerecivel(nome, codigo, quantidade, preco, departamento,
+                                        dataValidade);
+                            }
+                            case 2 -> {
+                                System.out.println("Digite a marca");
+                                String marca = scanner.nextLine();
+                                scanner.nextLine();
+                                System.out.println("Digite a garantia em meses:");
+                                int garantia = scanner.nextInt();
+                                controle.adicionarProdutoEletronico(nome, codigo, quantidade, preco, marca, garantia);
+                            }
+                            case 3 -> {
+                                break OUTER;
+                            }
+
+                            default -> System.out.println("Opção Inválida");
+                        }
                     }
                     case 2 -> {
                         System.out.println("Digite o código do produto que deseja alterar:");
@@ -44,7 +76,16 @@ public class Main {
                         System.out.println("Digite o preço:");
                         double preco = scanner.nextDouble();
                         scanner.nextLine();
-                        Produto novoProduto = new Produto(nome, codigo, quantidade, preco);
+                        System.out.println("Digite o departamento: ");
+                        for (Departamento d : Departamento.values()) {
+                            System.out.println(d.ordinal() + " - " + d);
+                        }
+                        int escolha = scanner.nextInt();
+                        Departamento departamento = Departamento.values()[escolha];
+                        scanner.nextLine();
+                        System.out.println("Digite a data de validade");
+                        String dataValidade = scanner.nextLine();
+                        Produto novoProduto = new ProdutoPerecivel(nome, codigo, quantidade, preco, departamento, dataValidade);
                         controle.atualizarEstoque(codigoAlterar, novoProduto);
                     }
                     case 3 -> {
