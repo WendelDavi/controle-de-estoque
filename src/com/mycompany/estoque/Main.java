@@ -1,3 +1,9 @@
+package com.mycompany.estoque;
+import com.mycompany.model.Departamento;
+import com.mycompany.model.Produto;
+import com.mycompany.model.ProdutoEletronico;
+import com.mycompany.model.ProdutoPerecivel;
+import com.mycompany.service.ControleEstoque;
 import java.util.Scanner;
 
 public class Main {

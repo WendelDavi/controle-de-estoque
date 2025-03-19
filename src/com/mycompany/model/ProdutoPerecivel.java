@@ -1,3 +1,5 @@
+package com.mycompany.model;
+
 public class ProdutoPerecivel extends Produto {
     private Departamento departamento;
     private String dataValidade;

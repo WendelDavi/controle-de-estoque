@@ -1,4 +1,7 @@
+package com.mycompany.service;
 import java.util.ArrayList;
+
+import com.mycompany.model.Produto;
 
 public class ControleEstoque {
 

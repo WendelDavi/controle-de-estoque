@@ -1,3 +1,4 @@
+package com.mycompany.model;
 public class ProdutoEletronico extends Produto {
     private String marca;
     private int garantia;
