@@ -1,18 +1,14 @@
 package com.mycompany.estoque;
 
-import com.mycompany.model.Departamento;
-import com.mycompany.model.Produto;
-import com.mycompany.model.ProdutoEletronico;
-import com.mycompany.model.ProdutoPerecivel;
-import com.mycompany.service.ControleEstoque;
+import com.mycompany.model.*;
+import com.mycompany.service.*;
 import java.util.Scanner;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class Main {
 
     public static void main(String[] args) {
         ControleEstoque controle = new ControleEstoque();
+        CadastroService cadastroService = new CadastroService();
         try (Scanner scanner = new Scanner(System.in, "UTF-8")) {
             OUTER: while (true) {
                 System.out.println("1. Cadastrar produto");
@@ -24,100 +20,45 @@ public class Main {
 
                 switch (opcao) {
                     case 1 -> {
-                        System.out.println("Digite o nome:");
-                        String nome = scanner.next();
-                        scanner.nextLine();
-                        System.out.println("Digite o código:");
-                        int codigo = scanner.nextInt();
-                        scanner.nextLine();
-                        System.out.println("Digite a quantidade:");
-                        int quantidade = scanner.nextInt();
-                        scanner.nextLine();
-                        System.out.println("Digite o preço de compra:");
-                        double precoCompra = scanner.nextDouble();
-                        scanner.nextLine();
-                        System.out.println("Digite o preço de venda:");
-                        double precoVenda = scanner.nextDouble();
-                        scanner.nextLine();
-                        System.out.println("Digite o departamento: ");
-                        for (Departamento d : Departamento.values()) {
-                            System.out.println(d.ordinal() + " - " + d);
-                        }
-                        int escolha = scanner.nextInt();
-                        Departamento departamento = Departamento.values()[escolha];
-                        scanner.nextLine();
-                        System.out.println("Tipo de Produto:");
-                        System.out.println("1. Produto Perecível");
-                        System.out.println("2. Produto Eletronico");
-                        System.out.println("3. Sair");
-                        int tipoProduto = scanner.nextInt();
-                        switch (tipoProduto) {
+                        System.out.println("Qual o tipo de produto que deseja adicionar?");
+                        System.out.println("1. Perecível");
+                        System.out.println("2. Eletrônico");
+                        int tipo = scanner.nextInt();
+                        
+                        switch (tipo) {
                             case 1 -> {
-                                System.out.println("Digite o fornecedor:");
-                                String fornecedor = scanner.next();
-                                scanner.nextLine();
-                                System.out.println("Digite a data de validade (dd/MM/yyyy):");
-                                String dataTexto = scanner.nextLine();
-                                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                                LocalDate dataValidade = LocalDate.parse(dataTexto, formatter);
-                                Produto produto = new ProdutoPerecivel(nome, codigo, quantidade, departamento,
-                                        precoCompra, precoVenda, fornecedor, dataValidade);
+                                Produto produto = cadastroService.cadastrarProdutoPerecivel(scanner);
                                 controle.adicionarProduto(produto);
                             }
                             case 2 -> {
-                                System.out.println("Digite a marca");
-                                String marca = scanner.nextLine();
-                                scanner.nextLine();
-                                System.out.println("Digite o modelo");
-                                String modelo = scanner.nextLine();
-                                scanner.nextLine();
-                                System.out.println("Digite a garantia em meses:");
-                                int garantia = scanner.nextInt();
-                                Produto produto = new ProdutoEletronico(nome, codigo, quantidade, departamento,
-                                        precoCompra, precoVenda, marca, modelo, garantia);
+                                Produto produto = cadastroService.cadastrarProdutoEletronico(scanner);
                                 controle.adicionarProduto(produto);
                             }
-                            case 3 -> {
-                                break OUTER;
-                            }
-
-                            default -> System.out.println("Opção Inválida");
+                            default -> System.out.println("Tipo de produto inválido");
                         }
                     }
                     case 2 -> {
                         System.out.println("Digite o código do produto que deseja alterar:");
                         int codigoAlterar = scanner.nextInt();
-                        System.out.println("Digite o nome:");
-                        String nome = scanner.next();
                         scanner.nextLine();
-                        System.out.println("Digite o código:");
-                        int codigo = scanner.nextInt();
-                        scanner.nextLine();
-                        System.out.println("Digite a quantidade:");
-                        int quantidade = scanner.nextInt();
-                        scanner.nextLine();
-                        System.out.println("Digite o preço de compra:");
-                        double precoCompra = scanner.nextDouble();
-                        scanner.nextLine();
-                        System.out.println("Digite o preço de venda:");
-                        double precoVenda = scanner.nextDouble();
-                        scanner.nextLine();
-                        System.out.println("Digite o departamento: ");
-                        for (Departamento d : Departamento.values()) {
-                            System.out.println(d.ordinal() + " - " + d);
+                        Produto produtoExistente = controle.buscarProdutoPorCodigo(codigoAlterar).orElse(null);
+                        if (produtoExistente == null) {
+                            System.out.println("Produto não encontrado!");
+                            break;
                         }
-                        int escolha = scanner.nextInt();
-                        Departamento departamento = Departamento.values()[escolha];
-                        scanner.nextLine();
-                        System.out.println("Digite o fornecedor:");
-                        String fornecedor = scanner.nextLine();
-                        scanner.nextLine();
-                        System.out.println("Digite a data de validade (dd/MM/yyyy):");
-                        String dataTexto = scanner.nextLine();
-                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                        LocalDate dataValidade = LocalDate.parse(dataTexto, formatter);
-                        Produto novoProduto = new ProdutoPerecivel(nome, codigo, quantidade, departamento, precoCompra, precoVenda, fornecedor, dataValidade);
-                        controle.atualizarEstoque(codigoAlterar, novoProduto);
+                        System.out.println("Produto encontrado");
+                        produtoExistente.exibirInformacoes();
+
+                        Produto novoProduto;
+                        if (produtoExistente instanceof ProdutoPerecivel) {
+                            novoProduto = cadastroService.cadastrarProdutoPerecivel(scanner);
+                        } else if (produtoExistente instanceof ProdutoEletronico) {
+                            novoProduto = cadastroService.cadastrarProdutoEletronico(scanner);
+                        } else {
+                            System.out.println("Tipo de produto desconhecido!");
+                            break;
+                        }
+                        controle.atualizarProduto(codigoAlterar, novoProduto);
                     }
                     case 3 -> {
                         controle.listarProdutos();
