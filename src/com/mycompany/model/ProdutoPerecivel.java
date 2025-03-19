@@ -1,21 +1,23 @@
 package com.mycompany.model;
+import java.time.LocalDate;
 
 public class ProdutoPerecivel extends Produto {
-    private Departamento departamento;
-    private String dataValidade;
+    private String fornecedor;
+    private LocalDate dataValidade;
 
-    public ProdutoPerecivel(String nome, int codigo, int quantidade, double preco, Departamento departamento, String dataValidade) {
-        super(nome, codigo, quantidade, preco);
-        this.departamento = departamento;
+    public ProdutoPerecivel(String nome, int codigo, int quantidade, Departamento departamento, double precoCompra, double precoVenda, String fornecedor, LocalDate dataValidade) {
+        super(nome, codigo, quantidade, departamento, precoCompra, precoVenda);
+        this.fornecedor = fornecedor;
         this.dataValidade = dataValidade;
     }
 
-    public String getDataValidade() {
-        return dataValidade;
+    
+    public String getFornecedor() {
+        return fornecedor;
     }
 
-    public Departamento getDepartamento() {
-        return departamento;
+    public LocalDate getDataValidade() {
+        return dataValidade;
     }
 
     @Override
@@ -23,8 +25,11 @@ public class ProdutoPerecivel extends Produto {
         System.out.println("Nome:" + getNome());
         System.out.println("Código: " + getCodigo());
         System.out.println("Quantidade: " + getQuantidade());
-        System.out.println("Preço: R$ " + getPreco());
         System.out.println("Departamento: " + getDepartamento());
+        System.out.println("Preço de Compra: R$ " + getPrecoCompra());
+        System.out.println("Preço de Venda: R$ " + getPrecoVenda());
+        System.out.println("Departamento: " + getDepartamento());
+        System.out.println("Fornecedor: " + fornecedor);
         System.out.println("Data de validade: " + dataValidade);
         System.out.println("-------------------------");
     }

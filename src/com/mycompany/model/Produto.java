@@ -4,13 +4,17 @@ public abstract class Produto {
     private String nome;
     private int codigo;
     private int quantidade;
-    private double preco;
+    private Departamento departamento;
+    private double precoCompra;
+    private double precoVenda;
 
-    public Produto(String nome, int codigo, int quantidade, double preco) {
+    public Produto(String nome, int codigo, int quantidade, Departamento departamento, double precoCompra, double precoVenda) {
         this.nome = nome;
         this.codigo = codigo;
         this.quantidade = quantidade;
-        this.preco = preco;
+        this.departamento = departamento;
+        this.precoCompra = precoCompra;
+        this.precoVenda = precoVenda;
     }
 
     public String getNome() {
@@ -37,13 +41,30 @@ public abstract class Produto {
         this.quantidade = quantidade;
     }
 
-    public double getPreco() {
-        return preco;
+    public Departamento getDepartamento() {
+        return departamento;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setDepartamento(Departamento departamento) {
+        this.departamento = departamento;
     }
+
+    public double getPrecoCompra() {
+        return precoCompra;
+    }
+
+    public void setPrecoCompra(double precoCompra) {
+        this.precoCompra = precoCompra;
+    }
+
+    public double getPrecoVenda() {
+        return precoVenda;
+    }
+
+    public void setPrecoVenda(double precoVenda) {
+        this.precoVenda = precoVenda;
+    }
+
 
     public abstract void exibirInformacoes();
 }    

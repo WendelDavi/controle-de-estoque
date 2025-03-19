@@ -1,19 +1,26 @@
 package com.mycompany.model;
 public class ProdutoEletronico extends Produto {
     private String marca;
-    private int garantia;
+    private String modelo;
+    private int mesesGarantia;
 
-    public ProdutoEletronico(String nome, int codigo, int quantidade, double preco, String marca, int garantia) {
-        super(nome, codigo, quantidade, preco);
+    public ProdutoEletronico(String nome, int codigo, int quantidade, Departamento departamento, double precoCompra, double precoVenda, String marca, String modelo, int mesesGarantia) {
+        super(nome, codigo, quantidade, departamento, precoCompra, precoVenda);
         this.marca = marca;
-        this.garantia = garantia;
+        this.modelo = modelo;
+        this.mesesGarantia = mesesGarantia;
     }
 
     public String getMarca() {
         return marca;
     }
-    public int getGarantia() {
-        return garantia;
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public int getMesesGarantia() {
+        return mesesGarantia;
     }
 
     @Override
@@ -21,9 +28,12 @@ public class ProdutoEletronico extends Produto {
         System.out.println("Nome: " + getNome());
         System.out.println("Código: " + getCodigo());
         System.out.println("Quantidade: " + getQuantidade());
-        System.out.println("Preço: R$ " + getPreco());
+        System.out.println("Departamento: " + getDepartamento());
+        System.out.println("Preço de Compra: " + getPrecoCompra());
+        System.out.println("Preço de Venda: " + getPrecoVenda());
         System.out.println("Marca: " + getMarca());
-        System.out.println("Garantia: " + getGarantia());
+        System.out.println("Modelo: " + getModelo());
+        System.out.println("Garantia: " + getMesesGarantia());
         System.out.println("-------------------------");
     }
 }
