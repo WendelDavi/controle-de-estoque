@@ -33,10 +33,18 @@ public class CadastroService {
         System.out.println("Digite o fornecedor:");
         String fornecedor = scanner.next();
         scanner.nextLine();
-        System.out.println("Digite a data de validade (dd/MM/yyyy):");
-        String dataTexto = scanner.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        LocalDate dataValidade = LocalDate.parse(dataTexto, formatter);
+        
+        System.out.println("Deseja informar uma data de validade? (S/N)");
+        String resposta = scanner.nextLine().trim().toUpperCase();
+        LocalDate dataValidade = null;
+        
+        if(resposta.equals("S")) {
+        	System.out.println("Digite a data de validade (dd/MM/yyyy):");
+        	String dataTexto = scanner.nextLine();
+        	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        	dataValidade = LocalDate.parse(dataTexto, formatter);
+        }
+        
         return new ProdutoPerecivel(nome, codigo, quantidade, departamento, precoCompra, precoVenda, fornecedor,
                 dataValidade);
     }
